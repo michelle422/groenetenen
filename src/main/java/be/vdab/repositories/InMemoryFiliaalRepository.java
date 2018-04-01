@@ -8,11 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
 import be.vdab.entities.Filiaal;
 import be.vdab.valueobjects.Adres;
+import be.vdab.valueobjects.PostcodeReeks;
 
 @Repository
 class InMemoryFiliaalRepository implements FiliaalRepository {
@@ -63,6 +65,13 @@ class InMemoryFiliaalRepository implements FiliaalRepository {
 	@Override
 	public long findAantalWerknemers(long id) {
 		return id == 1L ? 7L : 0L;		// dummy implementatie
+	}
+
+	@Override
+	public List<Filiaal> findByPostcodeReeks(PostcodeReeks reeks) {
+		return filialen.values().stream()
+				.filter(filiaal -> reeks.bevat(filiaal.getAdres().getPostcode()))
+				.collect(Collectors.toList());
 	}
 	
 }
