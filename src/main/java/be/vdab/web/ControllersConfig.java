@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -43,6 +46,13 @@ public class ControllersConfig extends WebMvcConfigurerAdapter {
 		resolver.setCookieMaxAge(604800);  // 7 dagen
 		return resolver;
 	}
+	
+	@Bean
+	LocalValidatorFactoryBean validatorFactory() {
+		LocalValidatorFactoryBean factory = new LocalValidatorFactoryBean();
+		factory.setValidationMessageSource(messageSource());
+		return factory;
+	}
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -59,6 +69,11 @@ public class ControllersConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new LocaleChangeInterceptor());
+	}
+
+	@Override
+	public Validator getValidator() {
+		return new SpringValidatorAdapter(validatorFactory().getValidator());
 	}
 	
 }

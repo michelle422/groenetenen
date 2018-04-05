@@ -28,7 +28,7 @@ class InMemoryFiliaalRepository implements FiliaalRepository {
 		filialen.put(3L, new Filiaal(3, "Gavdos", false, BigDecimal.valueOf(3000), LocalDate.now(), 
 						new Adres("Koestraat", "44", 9700, "Oudenaarde")));
 		filialen.put(4L, new Filiaal(4, "Shonan", false, BigDecimal.valueOf(4000), LocalDate.now(), 
-						new Adres("Kongostraat", "44", 9000, "Gent")));
+						new Adres("Kongostraat", "23", 9000, "Gent")));
 	}
 
 	@Override
