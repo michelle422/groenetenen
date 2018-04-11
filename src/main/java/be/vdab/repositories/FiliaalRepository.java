@@ -13,6 +13,5 @@ public interface FiliaalRepository {
 	void delete(long id);
 	List<Filiaal> findAll();
 	long findAantalFilialen();	
-	long findAantalWerknemers(long id);	// het aantal werknemers van een filiaal
 	List<Filiaal> findByPostcodeReeks(PostcodeReeks reeks);
 }
