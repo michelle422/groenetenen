@@ -3,18 +3,19 @@ package be.vdab.repositories;
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import be.vdab.entities.Filiaal;
+import be.vdab.entities.Werknemer;
 import be.vdab.valueobjects.Adres;
 
 @Configuration
-@ComponentScan
+@EnableJpaRepositories
 public class RepositoriesConfig {
 
 	@Bean
@@ -23,7 +24,7 @@ public class RepositoriesConfig {
 				new LocalContainerEntityManagerFactoryBean();
 		factory.setDataSource(dataSource);
 		factory.setPackagesToScan(Filiaal.class.getPackage().getName(), 
-				Adres.class.getPackage().getName());
+				Adres.class.getPackage().getName(), Werknemer.class.getPackage().getName());
 		HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
 		adapter.setShowSql(true);
 		factory.setJpaVendorAdapter(adapter);

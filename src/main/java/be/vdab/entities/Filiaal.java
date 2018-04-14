@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.Valid;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
@@ -52,6 +53,8 @@ public class Filiaal implements Serializable {
 	private Adres adres;
 	@OneToMany(mappedBy = "filiaal")
 	private Set<Werknemer> werknemers;
+	@Version
+	private long versie;
 	
 	public Filiaal(String naam, boolean hoofdFiliaal, 
 			BigDecimal waardeGebouw, LocalDate inGebruikName, Adres adres) {
@@ -122,5 +125,16 @@ public class Filiaal implements Serializable {
 	public Set<Werknemer> getWerknemers() {
 		return Collections.unmodifiableSet(werknemers);
 	}
+
+	public long getVersie() {
+		return versie;
+	}
+
+	public void setVersie(long versie) {
+		this.versie = versie;
+	}
 	
+	public void afschrijven() {
+		this.waardeGebouw = BigDecimal.ZERO;
+	}
 }

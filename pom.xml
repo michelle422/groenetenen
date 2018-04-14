@@ -97,5 +97,10 @@
 		<version>[5.1,5.99]</version> 
 		<scope>test</scope> 
 	</dependency>
+	<dependency>
+		<groupId>org.springframework.data</groupId>
+		<artifactId>spring-data-jpa</artifactId>
+		<version>[1.11,1.99]</version>
+	</dependency>
   </dependencies>
 </project>
