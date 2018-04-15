@@ -16,7 +16,7 @@ import be.vdab.entities.Filiaal;
 import be.vdab.valueobjects.Adres; 
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes= {TestDataSourceConfig.class, RepositoriesConfig.class})
+@ContextConfiguration(classes= {TestRepositoriesConfig.class, TestDataSourceConfig.class})
 @Transactional
 public class FiliaalRepositoryTest {
 	@Autowired
