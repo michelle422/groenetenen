@@ -2,8 +2,11 @@ package be.vdab.web;
 
 import java.util.List;
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.springframework.http.MediaType;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -22,7 +25,7 @@ import be.vdab.services.FiliaalService;
 import be.vdab.valueobjects.PostcodeReeks;
 
 @Controller
-@RequestMapping("/filialen")
+@RequestMapping(path = "/filialen", produces = MediaType.TEXT_HTML_VALUE)
 class FiliaalController {
 	private static final String FILIALEN_VIEW = "filialen/filialen";
 	private static final String FILIAAL_VIEW = "filialen/filiaal";
@@ -31,6 +34,7 @@ class FiliaalController {
 	private static final String PER_POSTCODE_VIEW = "filialen/perpostcode";
 	private static final String WIJZIGEN_VIEW = "filialen/wijzigen";
 	private static final String AFSCHRIJVEN_VIEW = "filialen/afschrijven"; 
+	private static final String PER_ID_VIEW = "filialen/perid";
 	private static final String REDIRECT_URL_NA_TOEVOEGEN = "redirect:/filialen";
 	private static final String REDIRECT_URL_FILIAAL_NIET_GEVONDEN = "redirect:/filialen";
 	private static final String REDIRECT_URL_NA_VERWIJDEREN = "redirect:/filialen/{id}/verwijderd";
@@ -48,11 +52,12 @@ class FiliaalController {
 	}
 
 	@PostMapping
-	String create(@Valid Filiaal filiaal, BindingResult bindingResult) {
+	String create(@Valid Filiaal filiaal, BindingResult bindingResult, 
+			HttpServletRequest request) {
 		if (bindingResult.hasErrors()) {
 			return TOEVOEGEN_VIEW;
 		}
-		filiaalService.create(filiaal);
+		filiaalService.create(filiaal, request.getRequestURL().toString());
 		return REDIRECT_URL_NA_TOEVOEGEN;
 	}
 	
@@ -165,5 +170,10 @@ class FiliaalController {
 		}
 		filiaalService.afschrijven(afschrijvenForm.getFilialen());
 		return new ModelAndView(REDIRECT_NA_AFSCHRIJVEN);
+	}
+	
+	@GetMapping("perid")
+	String findById() {
+		return PER_ID_VIEW;
 	}
 }

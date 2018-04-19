@@ -6,21 +6,24 @@ import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import be.vdab.datasource.DataConfig;
+import be.vdab.datasource.DataSourceConfig;
+import be.vdab.mail.MailConfig;
 import be.vdab.repositories.RepositoriesConfig;
+import be.vdab.restclients.RestClientsConfig;
+import be.vdab.restservices.RestControllersConfig;
 import be.vdab.services.ServicesConfig;
 
 public class Initializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class<?>[] { DataConfig.class, RepositoriesConfig.class, 
-			ServicesConfig.class};
+		return new Class<?>[] { DataSourceConfig.class, RepositoriesConfig.class, 
+			ServicesConfig.class, RestClientsConfig.class, MailConfig.class};
 	}
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class<?>[] { ControllersConfig.class };
+		return new Class<?>[] { ControllersConfig.class, RestControllersConfig.class };
 	}
 
 	@Override
