@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import be.vdab.entities.Filiaal;
 import be.vdab.exceptions.FiliaalHeeftNogWerknemersException;
@@ -80,6 +81,12 @@ class DefaultFiliaalService implements FiliaalService {
 	public void afschrijven(List<Filiaal> filialen) {
 		filialen.forEach(filiaal -> filiaal.afschrijven());  // je wijzigt een entity binnen een transactie. 
 		// JPA wijzigt dan automatisch het bijbehorende record bij de commit 
+	}
+
+	@Override
+	@Scheduled(/*cron = "0 0 1 * * *"*/ fixedRate=60000) // test = om de minuut 
+	public void aantalFilialenMail() {
+		mailSender.aantalFilialenMail(filiaalRepository.count()); 
 	}
 	
 }

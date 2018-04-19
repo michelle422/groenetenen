@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import be.vdab.entities.Filiaal;
@@ -27,6 +28,7 @@ class DefaultMailSender implements MailSender {
 	}
 
 	@Override
+	@Async
 	public void nieuwFiliaalMail(Filiaal filiaal, String urlFiliaal) {
 		try {
 			MimeMessage message = sender.createMimeMessage();
@@ -37,10 +39,25 @@ class DefaultMailSender implements MailSender {
 					"<a href='%s/wijzigen'>hier</a> nazien", 
 					filiaal.getNaam(), urlFiliaal), true);
 		} catch (MessagingException | MailException ex) {
-			LOGGER.log(Level.SEVERE, "kan mail nieuw filiaal niet sturen", ex);
-			throw new RuntimeException("Kan mail nieuw filiaal niet sturen", ex);
+			LOGGER.log(Level.SEVERE, "kan mail nieuw filiaal niet versturen", ex);
+			throw new RuntimeException("Kan mail nieuw filiaal niet versturen", ex);
 		}
 		
+	}
+
+	@Override
+	public void aantalFilialenMail(long aantal) {
+		try { 
+			MimeMessage message = sender.createMimeMessage();     
+			MimeMessageHelper helper = new MimeMessageHelper(message);     
+			helper.setTo(webmaster);     
+			helper.setSubject("Aantal filialen");     
+			helper.setText(String.format("Er zijn <strong>%d</strong> filialen.", aantal), true);     
+			sender.send(message);   
+		} catch (MessagingException | MailException ex) {     
+			LOGGER.log(Level.SEVERE, "kan mail aantal filialen niet versturen", ex);     
+			throw new RuntimeException("Kan mail niet versturen", ex);   
+		}
 	}
 	
 }
