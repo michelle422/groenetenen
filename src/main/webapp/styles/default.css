@@ -69,6 +69,10 @@ h1 {
 	clear: both;
 }
 
+h1, h2 {   
+	color: red; 
+}
+
 table, th, td {
 	border: 1px solid silver;
 	border-collapse: collapse;

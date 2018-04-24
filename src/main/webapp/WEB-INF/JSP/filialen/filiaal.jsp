@@ -2,6 +2,7 @@
 <%@taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
 <%@taglib prefix='v' uri='http://vdab.be/tags'%>
 <%@taglib prefix='spring' uri='http://www.springframework.org/tags'%>
+<%@taglib prefix='security' uri='http://www.springframework.org/security/tags'%> 
 <!doctype html>
 <html lang='nl'>
 <head>
@@ -36,6 +37,7 @@
 			<form action="${verwijderURL}" method="post">
 				<input type="submit" value="Verwijderen">
 			</form>
+			<security:csrfInput/>
 			<spring:url value="/filialen/{id}/wijzigen" var="wijzigURL">
 				<spring:param name="id" value="${filiaal.id}"/>
 			</spring:url>

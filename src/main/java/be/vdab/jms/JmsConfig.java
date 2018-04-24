@@ -38,7 +38,8 @@ public class JmsConfig {
 		return template;   
 	}
 	
-	@Bean public DefaultJmsListenerContainerFactory jmsListenerContainerFactory(
+	@Bean 
+	public DefaultJmsListenerContainerFactory jmsListenerContainerFactory(
 			 ActiveMQConnectionFactory connectionFactory) {   
 		DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();   
 		factory.setConnectionFactory(connectionFactory);   

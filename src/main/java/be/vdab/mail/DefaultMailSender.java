@@ -38,6 +38,7 @@ class DefaultMailSender implements MailSender {
 			helper.setText(String.format("Je kan het nieuwe filiaal <strong>%s</strong> " + 
 					"<a href='%s/wijzigen'>hier</a> nazien", 
 					filiaal.getNaam(), urlFiliaal), true);
+			sender.send(message); 
 		} catch (MessagingException | MailException ex) {
 			LOGGER.log(Level.SEVERE, "kan mail nieuw filiaal niet versturen", ex);
 			throw new RuntimeException("Kan mail nieuw filiaal niet versturen", ex);
